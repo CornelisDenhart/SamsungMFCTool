@@ -55,14 +55,14 @@ successIdentificator="Your Selections have been modified successfully"
 result=$(curl --cookie "$cookieData" --header "$headerData" --data $postData $dateURL 2>&1 | grep -c "$successIdentificator")
 if [ "$writeUptimeLog" = "1" ]; then
 	if [ ! -f $uptimelLogFile ]; then
-		echo -e "Date/Time""$CSVSeparator""Up=1 / Down=0" >> $uptimelLogFile
+		echo -e "Date/Time""$CSVSeparator""Up=1 / Down=0" > $uptimelLogFile
 	fi
 	echo -e $currentStamp"$CSVSeparator"$result >> $uptimelLogFile
 fi
 
 if [ "$writeUsageDataLog" = "1" ]; then
 	if [ ! -f $dataLogFile ]; then
-		echo -e "Date/Time""$CSVSeparator""PwrOnCnt""$CSVSeparator""TonerLevel""$CSVSeparator""TotalPgCnt""$CSVSeparator""TonerPgCnt""$CSVSeparator""ADFScanPgCnt""$CSVSeparator""FlatScanPgCnt" >> $dataLogFile
+		echo -e "Date/Time""$CSVSeparator""PwrOnCnt""$CSVSeparator""TonerLevel""$CSVSeparator""TotalPgCnt""$CSVSeparator""TonerPgCnt""$CSVSeparator""ADFScanPgCnt""$CSVSeparator""FlatScanPgCnt" > $dataLogFile
 	fi
 	tonerLevelIdentificator="&nbsp;%"
 	TotalPgCntIdentificator="Total Page Count"
