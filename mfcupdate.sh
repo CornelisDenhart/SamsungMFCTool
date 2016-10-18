@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# This script updates the clock and collects usage Data of 
-# Samsung SCX , possibly also other models of the SCX-5x30 Series
+# This script updates the clock and collects usage data of 
+# Samsung SCX-5530FN, possibly also other models of the SCX-5x30 series
 # So this compensates the lack of NTP client functionality of this device.
 #
 # This script relies problably on the following firmware versions on the device:
