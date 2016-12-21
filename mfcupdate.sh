@@ -52,7 +52,7 @@ currentStamp=$(date "+%Y-%m-%d %H:%M:%S")
 postData="GSI_CLOCK_MODE=2&GSI_DATE_TIME=$currentDate+$currentHr%3A$currentMin&"
 successIdentificator="Your Selections have been modified successfully"
 
-result=$(curl --cookie "$cookieData" --header "$headerData" --data $postData $dateURL 2>&1 | grep -c "$successIdentificator")
+result=$(curl --cookie "$cookieData" --header "$headerData" --connect-timeout 5 --max-time 10 --data $postData $dateURL 2>&1 | grep -c "$successIdentificator")
 if [ "$writeUptimeLog" = "1" ]; then
 	if [ ! -f $uptimelLogFile ]; then
 		echo -e "Date/Time""$CSVSeparator""Up=1 / Down=0" > $uptimelLogFile
@@ -72,8 +72,8 @@ if [ "$writeUsageDataLog" = "1" ]; then
 	FlatScanPgCntIdentificator="Platen Scan Page Count"
 
 	if [ "$result" -gt "0" ]; then
-		resultTonerLevel=$(curl $tonerURL 2>&1 | grep -m 1 "$tonerLevelIdentificator" | cut -f 5 | cut -d ' ' -f 5 | cut -d '&' -f 1)
-		dataCounters=$(curl $counterURL 2>&1 )
+		resultTonerLevel=$(curl --connect-timeout 5 --max-time 10 $tonerURL 2>&1 | grep -m 1 "$tonerLevelIdentificator" | cut -f 5 | cut -d ' ' -f 5 | cut -d '&' -f 1)
+		dataCounters=$(curl --connect-timeout 5 --max-time 10 $counterURL 2>&1 )
 
 		resultTotalPgCnt=$(echo "$dataCounters" | grep -m 1 -A 3 "$TotalPgCntIdentificator" | cut -d$'\n' -f 4 | cut -f 8 | cut -d ' ' -f 1)
 		resultPwrOnCnt=$(echo "$dataCounters" | grep -m 1 -A 3 "$PwrOnCntIdentificator" | cut -d$'\n' -f 4 | cut -f 8 | cut -d ' ' -f 1)
